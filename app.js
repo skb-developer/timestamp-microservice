@@ -24,7 +24,7 @@ function dateToUnix(dateString) {
 }
 
 app.get('/', (req, res) => {
-    res.send({ message: "Root Route" });
+    res.send({ message: "Server Deployed" });
 })
 
 app.get('/api/:date', async (req, res) => {
