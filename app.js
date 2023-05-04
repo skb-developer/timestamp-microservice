@@ -43,7 +43,7 @@ app.get('/api/:date', (req, res) => {
     try {
         if (isUnixTimestamp(req.params.date)) {
             var utc = unixToUtc(req.params.date);
-            res.send({ unix: req.params.date, utc: utc })
+            res.send({ unix: parseInt(req.params.date), utc: utc })
         }
         else if (new Date(req.params.date).toString() !== 'Invalid Date') {
             var unix = dateToUnix(req.params.date);
