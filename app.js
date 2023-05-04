@@ -28,23 +28,33 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api', (req, res) => {
-    var date = new Date();
-    var unix = dateToUnix(date);
-    var utc = dateToUtc(date);
-    res.send({ unix, utc });
+    try {
+        var date = new Date();
+        var unix = dateToUnix(date);
+        var utc = dateToUtc(date);
+        res.send({ unix, utc });
+    }
+    catch (error) {
+        res.send({ error: "Invalid Date" });
+    }
 })
 
-app.get('/api/:date', async (req, res) => {
-    if (isUnixTimestamp(req.params.date)) {
-        var utc = unixToUtc(req.params.date);
-        res.send({ unix: req.params.date, utc: utc })
+app.get('/api/:date', (req, res) => {
+    try {
+        if (isUnixTimestamp(req.params.date)) {
+            var utc = unixToUtc(req.params.date);
+            res.send({ unix: req.params.date, utc: utc })
+        }
+        else if (new Date(req.params.date).toString() !== 'Invalid Date') {
+            var unix = dateToUnix(req.params.date);
+            var utc = dateToUtc(req.params.date);
+            res.send({ unix: unix, utc: utc });
+        }
+        else {
+            res.send({ error: "Invalid Date" });
+        }
     }
-    else if (new Date(req.params.date).toString() !== 'Invalid Date') {
-        var unix = dateToUnix(req.params.date);
-        var utc = dateToUtc(req.params.date);
-        res.send({ unix: unix, utc: utc });
-    }
-    else {
+    catch (error) {
         res.send({ error: "Invalid Date" });
     }
 })
