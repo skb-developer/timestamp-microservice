@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
     res.send({ message: "Server Deployed" });
 })
 
-app.get('/api/timestamp', (req, res) => {
+app.get('/api', (req, res) => {
     try {
         var date = new Date();
         var unix = dateToUnix(date);
@@ -39,7 +39,7 @@ app.get('/api/timestamp', (req, res) => {
     }
 })
 
-app.get('/api/timestamp/:date', (req, res) => {
+app.get('/api/:date', (req, res) => {
     try {
         if (isUnixTimestamp(req.params.date)) {
             var utc = unixToUtc(req.params.date);
